@@ -64,6 +64,7 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
+    'https://vtu-app-xi.vercel.app',
 ]
 
 PAYSTACK_SECRET_KEY = config('PAYSTACK_SECRET_KEY')
