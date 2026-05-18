@@ -67,6 +67,12 @@ CORS_ALLOWED_ORIGINS = [
     'https://vtu-app-xi.vercel.app',
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://vtu-app-production.up.railway.app',
+    'https://vtu-app-xi.vercel.app',
+]
+
+
 PAYSTACK_SECRET_KEY = config('PAYSTACK_SECRET_KEY')
 PAYSTACK_PUBLIC_KEY = config('PAYSTACK_PUBLIC_KEY')
 
