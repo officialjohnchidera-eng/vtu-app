@@ -1,3 +1,4 @@
+import PaymentCallback from './pages/PaymentCallback';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import Login from './pages/Login';
@@ -18,7 +19,7 @@ const ProtectedRoute = ({ children }) => {
 export default function App() {
     return (
         <Routes>
-          <Route path="/" element={<Landing />} />
+            <Route path="/" element={<Landing />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/dashboard" element={
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="/fund" element={
                 <ProtectedRoute><FundWallet /></ProtectedRoute>
             } />
+            <Route path="/payment/callback" element={<PaymentCallback />} />
         </Routes>
     );
 }
