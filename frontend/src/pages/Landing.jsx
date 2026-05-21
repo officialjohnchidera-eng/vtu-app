@@ -12,6 +12,14 @@ import {
 } from 'lucide-react';
 
 export default function Landing() {
+    // High-availability CDN logo assets
+    const networkLogos = {
+        mtn: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/New-mtn-logo.jpg/320px-New-mtn-logo.jpg",
+        airtel: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Airtel_logo.svg/320px-Airtel_logo.svg.png",
+        glo: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Globacom_Logo.svg/320px-Globacom_Logo.svg.png",
+        nineMobile: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/9mobile-logo.svg/320px-9mobile-logo.svg.png"
+    };
+
     const features = [
         { 
             icon: <Phone className="w-6 h-6 text-yellow-500" />, 
@@ -98,7 +106,7 @@ export default function Landing() {
                         cheap data bundles, and automatic wallet funding. Powered by trusted, bulletproof security.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
                         <Link to="/register" className="w-full sm:w-auto bg-emerald-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-emerald-400 transition transform hover:-translate-y-0.5 shadow-xl shadow-emerald-900/30">
                             Create Free Account
                         </Link>
@@ -107,24 +115,31 @@ export default function Landing() {
                         </Link>
                     </div>
 
-                    {/* Network Badges Showcase */}
-                    <div className="mt-16 pt-8 border-t border-slate-800/60">
-                        <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-4">Supported Networks</p>
-                        <div className="flex flex-wrap justify-center items-center gap-4">
-                            <span className="bg-amber-400/10 border border-amber-400/20 text-amber-400 px-4 py-2 rounded-xl text-xs font-black tracking-wider flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-amber-400"></span> MTN
-                            </span>
-                            <span className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-2 rounded-xl text-xs font-black tracking-wider flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-red-500"></span> AIRTEL
-                            </span>
-                            <span className="bg-lime-500/10 border border-lime-500/20 text-lime-400 px-4 py-2 rounded-xl text-xs font-black tracking-wider flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-lime-500"></span> GLO
-                            </span>
-                            <span className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-2 rounded-xl text-xs font-black tracking-wider flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-emerald-500"></span> 9MOBILE
-                            </span>
+                    {/* Pro Brand Logo Row (Replaced old text badges) */}
+                    <div className="pt-8 border-t border-slate-800/40 max-w-3xl mx-auto">
+                        <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-6">
+                            Supported Telecom Networks
+                        </p>
+                        <div className="grid grid-cols-2 sm:flex sm:items-center sm:justify-center gap-6 sm:gap-14 px-4">
+                            {/* MTN */}
+                            <div className="h-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-6 py-2.5 flex items-center justify-center grayscale hover:grayscale-0 hover:bg-white/10 hover:border-amber-500/30 transition-all duration-300 group">
+                                <img src={networkLogos.mtn} alt="MTN" className="h-full object-contain rounded" />
+                            </div>
+                            {/* Airtel */}
+                            <div className="h-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-6 py-2.5 flex items-center justify-center grayscale hover:grayscale-0 hover:bg-white/10 hover:border-red-500/30 transition-all duration-300 group">
+                                <img src={networkLogos.airtel} alt="Airtel" className="h-full object-contain" />
+                            </div>
+                            {/* Glo */}
+                            <div className="h-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-6 py-2.5 flex items-center justify-center grayscale hover:grayscale-0 hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300 group">
+                                <img src={networkLogos.glo} alt="Glo" className="h-full object-contain scale-125" />
+                            </div>
+                            {/* 9mobile */}
+                            <div className="h-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-6 py-2.5 flex items-center justify-center grayscale hover:grayscale-0 hover:bg-white/10 hover:border-lime-500/30 transition-all duration-300 group">
+                                <img src={networkLogos.nineMobile} alt="9mobile" className="h-full object-contain scale-110" />
+                            </div>
                         </div>
                     </div>
+
                 </div>
             </section>
 
