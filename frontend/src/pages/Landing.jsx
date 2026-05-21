@@ -1,40 +1,75 @@
 import { Link } from 'react-router-dom';
+import { 
+  Phone, 
+  Wifi, 
+  Zap, 
+  Lock, 
+  Tv, 
+  BookOpen, 
+  TrendingUp, 
+  ShieldCheck, 
+  Clock 
+} from 'lucide-react';
 
 export default function Landing() {
     const features = [
-        { icon: '📱', title: 'Buy Airtime', desc: 'Instant airtime for all networks — MTN, Airtel, Glo, 9mobile' },
-        { icon: '🌐', title: 'Buy Data', desc: 'Affordable data bundles for all Nigerian networks' },
-        { icon: '⚡', title: 'Instant Delivery', desc: 'Transactions processed in seconds, 24/7' },
-        { icon: '🔒', title: 'Secure Payments', desc: 'Powered by Paystack — Nigeria\'s most trusted payment gateway' },
-        { icon: '💰', title: 'Best Rates', desc: 'Competitive prices on all airtime and data purchases' },
-        { icon: '📊', title: 'Transaction History', desc: 'Track all your purchases in one place' },
+        { 
+            icon: <Phone className="w-6 h-6 text-yellow-500" />, 
+            title: 'Instant Airtime Top-up', 
+            desc: 'Get immediate value across MTN, Airtel, Glo, and 9mobile with zero delays.' 
+        },
+        { 
+            icon: <Wifi className="w-6 h-6 text-emerald-500" />, 
+            title: 'Cheap Data Bundles', 
+            desc: 'Access SME, Gifting, and Corporate data bundles at heavy discounts from market rates.' 
+        },
+        { 
+            icon: <Zap className="w-6 h-6 text-amber-500" />, 
+            title: 'Electricity Bills', 
+            desc: 'Pay for both prepaid and postpaid meters easily (IKEDC, EKEDC, AEDC, KEDCO, etc).' 
+        },
+        { 
+            icon: <Tv className="w-6 h-6 text-indigo-500" />, 
+            title: 'Cable TV Subscription', 
+            desc: 'Renew your DStv, GOtv, and StarTimes packages instantly without missing your favorite shows.' 
+        },
+        { 
+            icon: <BookOpen className="w-6 h-6 text-purple-500" />, 
+            title: 'Exam Result Checkers', 
+            desc: 'Purchase WAEC, NECO, and JAMB e-pins securely at affordable wholesale rates.' 
+        },
+        { 
+            icon: <TrendingUp className="w-6 h-6 text-blue-600" />, 
+            title: 'Reseller API & Margins', 
+            desc: 'Want to make money? Start your own VTU business with our automated, fast backend API.' 
+        },
     ];
 
-    const networks = ['MTN', 'Airtel', 'Glo', '9mobile'];
-
     const steps = [
-        { step: '01', title: 'Create Account', desc: 'Sign up in less than 2 minutes' },
-        { step: '02', title: 'Fund Wallet', desc: 'Add money securely via Paystack' },
-        { step: '03', title: 'Buy & Enjoy', desc: 'Purchase airtime or data instantly' },
+        { step: '01', title: 'Create a Free Account', desc: 'Sign up securely with just your basic details in under a minute.' },
+        { step: '02', title: 'Fund Your Wallet', desc: 'Get a dedicated personal bank account automatically assigned to you for instant funding.' },
+        { step: '03', title: 'Transact & Save', desc: 'Buy any product at cheaper rates and watch transactions deliver in split seconds.' },
     ];
 
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-slate-50 font-sans antialiased text-slate-800">
 
             {/* Navbar */}
-            <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 px-6 py-4">
-                <div className="max-w-6xl mx-auto flex justify-between items-center">
+            <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-6 py-4">
+                <div className="max-w-7xl mx-auto flex justify-between items-center">
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                            <span className="text-white font-bold text-sm">Sub</span>
+                        <div className="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center shadow-md shadow-emerald-200">
+                            <span className="text-white font-extrabold text-lg">V</span>
                         </div>
-                        <span className="text-xl font-bold text-gray-900"><span className="text-blue-600"></span></span>
+                        <span className="text-xl font-black tracking-tight text-slate-900">
+                            VTU<span className="text-emerald-600">Express</span>
+                        </span>
                     </div>
-                    <div className="flex items-center gap-4">
-                        <Link to="/login" className="text-gray-600 hover:text-blue-600 font-medium transition">
+                    <div className="flex items-center gap-6">
+                        <Link to="/login" className="text-slate-600 hover:text-emerald-600 font-semibold transition">
                             Sign In
                         </Link>
-                        <Link to="/register" className="bg-blue-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-blue-700 transition">
+                        <Link to="/register" className="bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-emerald-700 transition shadow-lg shadow-emerald-100">
                             Get Started
                         </Link>
                     </div>
@@ -42,81 +77,104 @@ export default function Landing() {
             </nav>
 
             {/* Hero Section */}
-            <section className="pt-32 pb-20 px-6 bg-gradient-to-br from-blue-950 via-blue-900 to-blue-700 relative overflow-hidden">
-                {/* Background decoration */}
-                <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500 rounded-full opacity-10 -translate-y-1/2 translate-x-1/2"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-400 rounded-full opacity-10 translate-y-1/2 -translate-x-1/2"></div>
+            <section className="pt-36 pb-24 px-6 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 relative overflow-hidden">
+                {/* Decorative background gradients */}
+                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
 
-                <div className="max-w-4xl mx-auto text-center relative z-10">
-                    <div className="inline-flex items-center gap-2 bg-blue-800/50 text-blue-200 px-4 py-2 rounded-full text-sm mb-6 border border-blue-700">
-                        <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                        Fast • Reliable • Secure
+                <div className="max-w-5xl mx-auto text-center relative z-10">
+                    <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-300 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider mb-8 border border-emerald-500/20">
+                        <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+                        Fully Automated VTU Platform
                     </div>
 
-                    <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight mb-6">
-                        Buy Airtime & Data
-                        <span className="text-blue-300"> Instantly</span>
+                    <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.15] mb-6">
+                        Cheapest Data, Airtime & <br className="hidden md:inline" />
+                        Bills Delivered <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Instantly</span>
                     </h1>
 
-                    <p className="text-blue-200 text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
-                        The fastest and most reliable platform to purchase airtime and data for all Nigerian networks. 
-                        Top up in seconds, anytime, anywhere.
+                    <p className="text-slate-300 text-lg md:text-xl mb-10 max-w-3xl mx-auto leading-relaxed font-normal">
+                        Empowering thousands of Nigerians and resellers with fast, reliable utility bills, 
+                        cheap data bundles, and automatic wallet funding. Powered by trusted, bulletproof security.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Link to="/register" className="bg-white text-blue-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 transition shadow-lg">
-                            Start For Free →
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <Link to="/register" className="w-full sm:w-auto bg-emerald-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-emerald-400 transition transform hover:-translate-y-0.5 shadow-xl shadow-emerald-900/30">
+                            Create Free Account
                         </Link>
-                        <Link to="/login" className="border-2 border-blue-400 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-blue-800 transition">
-                            Sign In
+                        <Link to="/login" className="w-full sm:w-auto border border-slate-700 bg-slate-900/40 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-slate-800 transition backdrop-blur-sm">
+                            Developer API
                         </Link>
                     </div>
 
-                    {/* Network badges */}
-                    <div className="flex justify-center gap-3 mt-12">
-                        {networks.map((n) => (
-                            <span key={n} className="bg-blue-800/50 text-blue-200 px-4 py-2 rounded-lg text-sm font-medium border border-blue-700">
-                                {n}
+                    {/* Network Badges Showcase */}
+                    <div className="mt-16 pt-8 border-t border-slate-800/60">
+                        <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-4">Supported Networks</p>
+                        <div className="flex flex-wrap justify-center items-center gap-4">
+                            <span className="bg-amber-400/10 border border-amber-400/20 text-amber-400 px-4 py-2 rounded-xl text-xs font-black tracking-wider flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-amber-400"></span> MTN
                             </span>
-                        ))}
+                            <span className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-2 rounded-xl text-xs font-black tracking-wider flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-red-500"></span> AIRTEL
+                            </span>
+                            <span className="bg-lime-500/10 border border-lime-500/20 text-lime-400 px-4 py-2 rounded-xl text-xs font-black tracking-wider flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-lime-500"></span> GLO
+                            </span>
+                            <span className="bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-2 rounded-xl text-xs font-black tracking-wider flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-emerald-500"></span> 9MOBILE
+                            </span>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Stats Section */}
-            <section className="py-12 bg-blue-600">
-                <div className="max-w-4xl mx-auto px-6 grid grid-cols-3 gap-8 text-center">
-                    <div>
-                        <p className="text-4xl font-bold text-white">10K+</p>
-                        <p className="text-blue-200 mt-1">Happy Users</p>
+            {/* Trust Badges / Stats */}
+            <section className="py-12 bg-white border-b border-slate-100">
+                <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-100">
+                    <div className="flex flex-col items-center justify-center p-4">
+                        <div className="flex items-center gap-2 text-emerald-600 mb-1">
+                            <Clock className="w-5 h-5" />
+                            <p className="text-3xl font-extrabold text-slate-950">99.9%</p>
+                        </div>
+                        <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Automated Uptime</p>
                     </div>
-                    <div>
-                        <p className="text-4xl font-bold text-white">99.9%</p>
-                        <p className="text-blue-200 mt-1">Uptime</p>
+                    <div className="flex flex-col items-center justify-center p-4">
+                        <div className="flex items-center gap-2 text-emerald-600 mb-1">
+                            <ShieldCheck className="w-5 h-5" />
+                            <p className="text-3xl font-extrabold text-slate-950">₦0 Charge</p>
+                        </div>
+                        <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider">On Wallet Funding</p>
                     </div>
-                    <div>
-                        <p className="text-4xl font-bold text-white">4</p>
-                        <p className="text-blue-200 mt-1">Networks Supported</p>
+                    <div className="flex flex-col items-center justify-center p-4">
+                        <div className="flex items-center gap-2 text-emerald-600 mb-1">
+                            <Lock className="w-5 h-5" />
+                            <p className="text-3xl font-extrabold text-slate-950">PCIDSS</p>
+                        </div>
+                        <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Secure Payment Gateways</p>
                     </div>
                 </div>
             </section>
 
             {/* Features Section */}
-            <section className="py-20 px-6 bg-gray-50">
+            <section className="py-24 px-6 bg-slate-50">
                 <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-14">
-                        <h2 className="text-4xl font-bold text-gray-900 mb-4">Everything You Need</h2>
-                        <p className="text-gray-500 text-lg max-w-xl mx-auto">
-                            A complete platform for all your airtime and data needs
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
+                            Services Built For Quick Value
+                        </h2>
+                        <p className="text-slate-500 text-lg max-w-2xl mx-auto">
+                            Whether you are a retail user purchasing data for personal consumption or a business tycoon running an API network, we serve you with speed.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {features.map((f, i) => (
-                            <div key={i} className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-md transition border border-gray-100">
-                                <div className="text-4xl mb-4">{f.icon}</div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-2">{f.title}</h3>
-                                <p className="text-gray-500 leading-relaxed">{f.desc}</p>
+                            <div key={i} className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 border border-slate-100/80 group">
+                                <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
+                                    {f.icon}
+                                </div>
+                                <h3 className="text-xl font-bold text-slate-900 mb-3">{f.title}</h3>
+                                <p className="text-slate-500 text-sm leading-relaxed">{f.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -124,24 +182,23 @@ export default function Landing() {
             </section>
 
             {/* How It Works */}
-            <section className="py-20 px-6 bg-white">
-                <div className="max-w-4xl mx-auto">
-                    <div className="text-center mb-14">
-                        <h2 className="text-4xl font-bold text-gray-900 mb-4">How It Works</h2>
-                        <p className="text-gray-500 text-lg">Get started in 3 simple steps</p>
+            <section className="py-24 px-6 bg-white relative">
+                <div className="max-w-5xl mx-auto">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
+                            Start Transacting In 3 Steps
+                        </h2>
+                        <p className="text-slate-500 text-lg">No tedious configurations required.</p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
                         {steps.map((s, i) => (
-                            <div key={i} className="text-center">
-                                <div className="w-16 h-16 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl font-bold mx-auto mb-4">
+                            <div key={i} className="relative flex flex-col items-center text-center group">
+                                <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-xl font-black mb-6 border border-emerald-100 shadow-inner group-hover:bg-emerald-600 group-hover:text-white transition duration-300">
                                     {s.step}
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-2">{s.title}</h3>
-                                <p className="text-gray-500">{s.desc}</p>
-                                {i < steps.length - 1 && (
-                                    <div className="hidden md:block absolute mt-8 text-gray-300 text-2xl">→</div>
-                                )}
+                                <h3 className="text-xl font-bold text-slate-900 mb-2">{s.title}</h3>
+                                <p className="text-slate-500 text-sm leading-relaxed max-w-xs">{s.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -149,35 +206,39 @@ export default function Landing() {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 px-6 bg-gradient-to-br from-blue-950 to-blue-700">
-                <div className="max-w-2xl mx-auto text-center">
-                    <h2 className="text-4xl font-bold text-white mb-4">Ready to Get Started?</h2>
-                    <p className="text-blue-200 text-lg mb-8">
-                        Join thousands of Nigerians buying airtime and data at the best rates.
+            <section className="py-20 px-6 bg-gradient-to-br from-emerald-900 to-slate-950 relative">
+                <div className="max-w-4xl mx-auto text-center relative z-10">
+                    <h2 className="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">
+                        Never Run Out of Airtime or Data Again
+                    </h2>
+                    <p className="text-emerald-200/80 text-lg mb-8 max-w-xl mx-auto">
+                        Join thousands of smart Nigerians choosing instant delivery and best profit margins.
                     </p>
-                    <Link to="/register" className="bg-white text-blue-900 px-10 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 transition shadow-lg">
-                        Create Free Account →
+                    <Link to="/register" className="inline-block bg-white text-slate-950 px-10 py-4 rounded-xl font-bold text-lg hover:bg-slate-50 transition transform hover:-translate-y-0.5 shadow-xl">
+                        Create Your Account Now
                     </Link>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="bg-gray-900 text-gray-400 px-6 py-8">
-                <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <footer className="bg-slate-950 text-slate-400 px-6 py-12 border-t border-slate-900">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 bg-blue-600 rounded flex items-center justify-center">
-                            <span className="text-white font-bold text-xs">V</span>
+                        <div className="w-7 h-7 bg-emerald-600 rounded-lg flex items-center justify-center">
+                            <span className="text-white font-black text-sm">V</span>
                         </div>
-                        <span className="font-bold text-white">VTUApp</span>
+                        <span className="font-extrabold text-white tracking-tight">VTUExpress</span>
                     </div>
-                    <p className="text-sm">© 2026 VTUApp. All rights reserved.</p>
-                    <div className="flex gap-6 text-sm">
+                    <p className="text-xs text-slate-500">© 2026 VTUExpress. Fully licensed by NCC guidelines. Securely processed.</p>
+                    <div className="flex gap-6 text-xs font-semibold">
                         <a href="#" className="hover:text-white transition">Privacy Policy</a>
                         <a href="#" className="hover:text-white transition">Terms of Service</a>
-                        <a href="#" className="hover:text-white transition">Support</a>
+                        <a href="#" className="hover:text-white transition">WhatsApp Support</a>
                     </div>
                 </div>
             </footer>
         </div>
     );
 }
+
+```
