@@ -115,7 +115,7 @@ export default function Landing() {
                         </Link>
                     </div>
 
-                    {/* Pro Brand Logo Row (Replaced old text badges) */}
+                    {/* Pro Brand Logo Row */}
                     <div className="pt-8 border-t border-slate-800/40 max-w-3xl mx-auto">
                         <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-6">
                             Supported Telecom Networks
