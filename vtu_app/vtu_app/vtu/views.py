@@ -2,8 +2,8 @@ from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .serializers import AirtimePurchaseSerializer, AirtimePurchaseRequestSerializer, DataPurchase, DataPurchaseRequestSerializer, DataPurchaseSerializer
-from .models import AirtimePurchase, DataPurchase
+from .serializers import AirtimePurchaseSerializer, AirtimePurchaseRequestSerializer, CablePurchaseRequestSerializer, DataPurchaseRequestSerializer, DataPurchaseSerializer, CablePurchaseSerializer
+from .models import AirtimePurchase, DataPurchase, CablePurchase
 from .vtpass import VTPassService
 from decimal import Decimal
 from accounts.models import Wallet
@@ -204,14 +204,142 @@ class TransactionHistoryView(APIView):
             'id', 'phone_number', 'network', 'amount',
             'status', 'created_at'
         )
+        cable = CablePurchase.objects.filter(
+            user=request.user
+        ).values('id', 'smartcard_number', 'provider', 'amount', 'status', 'created_at')
+        cable_list = [dict(t, type='cable', network=t['provider'], phone_number=t['smartcard_number']) for t in cable]
 
         airtime_list = [dict(t, type='airtime') for t in airtime]
         data_list = [dict(t, type='data') for t in data]
 
         all_transactions = sorted(
-            airtime_list + data_list,
+            airtime_list + data_list + cable_list,
             key=lambda x: x['created_at'],
             reverse=True
         )
 
         return Response(all_transactions, status=status.HTTP_200_OK)
+
+class VerifySmartcardView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        smartcard_number = request.data.get('smartcard_number')
+        provider = request.data.get('provider')
+
+        if not smartcard_number or not provider:
+            return Response(
+                {'error': 'Smartcard number and provider are required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            vtpass = VTPassService()
+            response = vtpass.verify_smartcard(smartcard_number, provider)
+            return Response(response, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+
+class CablePlansView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, provider):
+        vtpass = VTPassService()
+        plans = vtpass.get_cable_plans(provider)
+        return Response(plans)
+
+
+class BuyCableView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = CablePurchaseRequestSerializer(data=request.data)
+
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        smartcard_number = serializer.validated_data['smartcard_number']
+        provider = serializer.validated_data['provider']
+        variation_code = serializer.validated_data['variation_code']
+
+        try:
+            vtpass = VTPassService()
+            plans = vtpass.get_cable_plans(provider)
+            
+            amount = None
+            variations = plans.get('content', {}).get('varations', []) or plans.get('content', {}).get('variations', [])
+            for plan in variations:
+                if plan.get('variation_code') == variation_code:
+                    amount = float(plan.get('variation_amount'))
+                    break
+
+            if not amount:
+                return Response(
+                    {'error': 'Invalid plan selected'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            wallet = Wallet.objects.get(user=request.user)
+            if wallet.balance < amount:
+                return Response(
+                    {'error': 'Insufficient wallet balance'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            reference = str(uuid.uuid4())
+            response = vtpass.buy_cable(smartcard_number, provider, variation_code, amount)
+
+            if response.get('code') == '000':
+                wallet.balance -= Decimal(str(amount))
+                wallet.save()
+                CablePurchase.objects.create(
+                    user=request.user,
+                    smartcard_number=smartcard_number,
+                    provider=provider,
+                    variation_code=variation_code,
+                    amount=amount,
+                    status='success',
+                    reference=reference,
+                    response_data=response
+                )
+                return Response({
+                    'message': 'Cable subscription successful',
+                    'reference': reference,
+                    'smartcard_number': smartcard_number,
+                    'provider': provider,
+                    'variation_code': variation_code
+                }, status=status.HTTP_200_OK)
+            else:
+                CablePurchase.objects.create(
+                    user=request.user,
+                    smartcard_number=smartcard_number,
+                    provider=provider,
+                    variation_code=variation_code,
+                    amount=0,
+                    status='failed',
+                    reference=reference,
+                    response_data=response
+                )
+                return Response(
+                    {'error': 'Transaction failed', 'details': response},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+        except Exception as e:
+            print("Error:", str(e))
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+
+class CablePurchaseHistoryView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = CablePurchaseSerializer
+
+    def get_queryset(self):
+        return CablePurchase.objects.filter(user=self.request.user).order_by('-created_at')

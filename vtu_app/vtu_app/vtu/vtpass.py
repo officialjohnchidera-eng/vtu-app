@@ -73,3 +73,46 @@ class VTPassService:
             return response.json()
         except Exception as e:
             return {'code': 'error', 'message': str(e)}
+
+    def verify_smartcard(self, smartcard_number, provider):
+        url = f"{self.base_url}/merchant-verify"
+        payload = {
+            'billersCode': smartcard_number,
+            'serviceID': provider,
+            'type': 'smartcard'
+        }
+        try:
+            response = requests.post(url, json=payload, headers=self.get_headers_post(), timeout=30)
+            print("Verify Response:", response.text)
+            return response.json()
+        except Exception as e:
+            return {'code': 'error', 'message': str(e)}
+
+    def get_cable_plans(self, provider):
+        url = f"{self.base_url}/service-variations?serviceID={provider}"
+        try:
+            response = requests.get(url, headers=self.get_headers_get(), timeout=30)
+            return response.json()
+        except Exception as e:
+            return {'code': 'error', 'message': str(e)}
+
+    def buy_cable(self, smartcard_number, provider, variation_code, amount):
+        url = f"{self.base_url}/pay"
+        payload = {
+            'request_id': f"cable_{smartcard_number}_{variation_code}_{int(time.time())}",
+            'serviceID': provider,
+            'billersCode': smartcard_number,
+            'variation_code': variation_code,
+            'amount': amount,
+            'phone': smartcard_number
+        }
+        try:
+            response = requests.post(url, json=payload, headers=self.get_headers_post(), timeout=30)
+            print("Cable Response:", response.text)
+            return response.json()
+        except requests.exceptions.ReadTimeout:
+            return {'code': 'timeout', 'message': 'Request timed out. Please try again.'}
+        except requests.exceptions.ConnectionError:
+            return {'code': 'connection_error', 'message': 'Could not connect to VTPass.'}
+        except Exception as e:
+            return {'code': 'error', 'message': str(e)}

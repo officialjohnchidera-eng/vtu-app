@@ -53,3 +53,31 @@ class DataPurchase(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.network} data - {self.status}"
+
+
+class CablePurchase(models.Model):
+    PROVIDER_CHOICES = [
+        ('dstv', 'DSTV'),
+        ('gotv', 'GOtv'),
+        ('startimes', 'Startimes'),
+    ]
+
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('success', 'Success'),
+        ('failed', 'Failed'),
+    ]
+
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    smartcard_number = models.CharField(max_length=20)
+    provider = models.CharField(max_length=20, choices=PROVIDER_CHOICES)
+    variation_code = models.CharField(max_length=50)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    customer_name = models.CharField(max_length=100, null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    reference = models.CharField(max_length=100, unique=True)
+    response_data = models.JSONField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.provider} - {self.status}"
