@@ -63,21 +63,21 @@ export default function Landing() {
         <div className="min-h-screen bg-slate-50 font-sans antialiased text-slate-800">
 
             {/* Navbar */}
-            <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-6 py-4">
+            <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 px-4 sm:px-6 py-3 sm:py-4">
                 <div className="max-w-7xl mx-auto flex justify-between items-center">
                     <div className="flex items-center gap-2">
-                        <div className="w-9 h-9 bg-emerald-600 rounded-xl flex items-center justify-center shadow-md shadow-emerald-200">
-                            <span className="text-white font-extrabold text-lg">V</span>
+                        <div className="w-8 h-8 sm:w-9 sm:h-9 bg-emerald-600 rounded-xl flex items-center justify-center shadow-md shadow-emerald-200">
+                            <span className="text-white font-extrabold text-base sm:text-lg">V</span>
                         </div>
-                        <span className="text-xl font-black tracking-tight text-slate-900">
+                        <span className="text-lg sm:text-xl font-black tracking-tight text-slate-900">
                             VTU<span className="text-emerald-600">Express</span>
                         </span>
                     </div>
-                    <div className="flex items-center gap-6">
-                        <Link to="/login" className="text-slate-600 hover:text-emerald-600 font-semibold transition">
+                    <div className="flex items-center gap-3 sm:gap-6">
+                        <Link to="/login" className="text-sm sm:text-base text-slate-600 hover:text-emerald-600 font-semibold transition">
                             Sign In
                         </Link>
-                        <Link to="/register" className="bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-emerald-700 transition shadow-lg shadow-emerald-100">
+                        <Link to="/register" className="bg-emerald-600 text-white px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-sm sm:text-base font-bold hover:bg-emerald-700 transition shadow-lg shadow-emerald-100">
                             Get Started
                         </Link>
                     </div>
@@ -85,57 +85,57 @@ export default function Landing() {
             </nav>
 
             {/* Hero Section */}
-            <section className="pt-36 pb-24 px-6 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 relative overflow-hidden">
+            <section className="pt-28 md:pt-36 pb-16 md:pb-24 px-4 sm:px-6 bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 relative overflow-hidden">
                 {/* Decorative background gradients */}
-                <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-                <div className="absolute bottom-0 left-0 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+                <div className="absolute top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                <div className="absolute bottom-0 left-0 w-60 md:w-80 h-60 md:h-80 bg-blue-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
 
                 <div className="max-w-5xl mx-auto text-center relative z-10">
-                    <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-300 px-4 py-2 rounded-full text-xs font-bold uppercase tracking-wider mb-8 border border-emerald-500/20">
-                        <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
+                    <div className="inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-300 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider mb-6 md:mb-8 border border-emerald-500/20">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-emerald-400 rounded-full animate-pulse"></span>
                         Fully Automated VTU Platform
                     </div>
 
-                    <h1 className="text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.15] mb-6">
+                    <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-white tracking-tight leading-[1.2] md:leading-[1.15] mb-4 md:mb-6">
                         Cheapest Data, Airtime & <br className="hidden md:inline" />
                         Bills Delivered <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Instantly</span>
                     </h1>
 
-                    <p className="text-slate-300 text-lg md:text-xl mb-10 max-w-3xl mx-auto leading-relaxed font-normal">
+                    <p className="text-slate-300 text-base sm:text-lg md:text-xl mb-8 md:mb-10 max-w-3xl mx-auto leading-relaxed font-normal">
                         Empowering thousands of Nigerians and resellers with fast, reliable utility bills, 
                         cheap data bundles, and automatic wallet funding. Powered by trusted, bulletproof security.
                     </p>
 
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-                        <Link to="/register" className="w-full sm:w-auto bg-emerald-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-emerald-400 transition transform hover:-translate-y-0.5 shadow-xl shadow-emerald-900/30">
+                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-12 md:mb-16">
+                        <Link to="/register" className="w-full sm:w-auto bg-emerald-500 text-white px-6 md:px-8 py-3.5 md:py-4 rounded-xl font-bold text-base md:text-lg hover:bg-emerald-400 transition transform hover:-translate-y-0.5 shadow-xl shadow-emerald-900/30">
                             Create Free Account
                         </Link>
-                        <Link to="/login" className="w-full sm:w-auto border border-slate-700 bg-slate-900/40 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-slate-800 transition backdrop-blur-sm">
+                        <Link to="/login" className="w-full sm:w-auto border border-slate-700 bg-slate-900/40 text-white px-6 md:px-8 py-3.5 md:py-4 rounded-xl font-bold text-base md:text-lg hover:bg-slate-800 transition backdrop-blur-sm">
                             Developer API
                         </Link>
                     </div>
 
                     {/* Pro Brand Logo Row */}
                     <div className="pt-8 border-t border-slate-800/40 max-w-3xl mx-auto">
-                        <p className="text-slate-500 text-xs font-bold uppercase tracking-widest mb-6">
+                        <p className="text-slate-500 text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-6">
                             Supported Telecom Networks
                         </p>
-                        <div className="grid grid-cols-2 sm:flex sm:items-center sm:justify-center gap-6 sm:gap-14 px-4">
+                        <div className="grid grid-cols-2 sm:flex sm:items-center sm:justify-center gap-4 sm:gap-14 px-2 sm:px-4">
                             {/* MTN */}
-                            <div className="h-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-6 py-2.5 flex items-center justify-center grayscale hover:grayscale-0 hover:bg-white/10 hover:border-amber-500/30 transition-all duration-300 group">
+                            <div className="h-10 sm:h-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-4 sm:px-6 py-2 flex items-center justify-center grayscale hover:grayscale-0 hover:bg-white/10 hover:border-amber-500/30 transition-all duration-300 group">
                                 <img src={networkLogos.mtn} alt="MTN" className="h-full object-contain rounded" />
                             </div>
                             {/* Airtel */}
-                            <div className="h-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-6 py-2.5 flex items-center justify-center grayscale hover:grayscale-0 hover:bg-white/10 hover:border-red-500/30 transition-all duration-300 group">
+                            <div className="h-10 sm:h-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-4 sm:px-6 py-2 flex items-center justify-center grayscale hover:grayscale-0 hover:bg-white/10 hover:border-red-500/30 transition-all duration-300 group">
                                 <img src={networkLogos.airtel} alt="Airtel" className="h-full object-contain" />
                             </div>
                             {/* Glo */}
-                            <div className="h-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-6 py-2.5 flex items-center justify-center grayscale hover:grayscale-0 hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300 group">
-                                <img src={networkLogos.glo} alt="Glo" className="h-full object-contain scale-125" />
+                            <div className="h-10 sm:h-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-4 sm:px-6 py-2 flex items-center justify-center grayscale hover:grayscale-0 hover:bg-white/10 hover:border-emerald-500/30 transition-all duration-300 group">
+                                <img src={networkLogos.glo} alt="Glo" className="h-full object-contain scale-110 sm:scale-125" />
                             </div>
                             {/* 9mobile */}
-                            <div className="h-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-6 py-2.5 flex items-center justify-center grayscale hover:grayscale-0 hover:bg-white/10 hover:border-lime-500/30 transition-all duration-300 group">
-                                <img src={networkLogos.nineMobile} alt="9mobile" className="h-full object-contain scale-110" />
+                            <div className="h-10 sm:h-12 bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl px-4 sm:px-6 py-2 flex items-center justify-center grayscale hover:grayscale-0 hover:bg-white/10 hover:border-lime-500/30 transition-all duration-300 group">
+                                <img src={networkLogos.nineMobile} alt="9mobile" className="h-full object-contain scale-100 sm:scale-110" />
                             </div>
                         </div>
                     </div>
@@ -144,51 +144,51 @@ export default function Landing() {
             </section>
 
             {/* Trust Badges / Stats */}
-            <section className="py-12 bg-white border-b border-slate-100">
-                <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-100">
+            <section className="py-10 md:py-12 bg-white border-b border-slate-100">
+                <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-100">
                     <div className="flex flex-col items-center justify-center p-4">
                         <div className="flex items-center gap-2 text-emerald-600 mb-1">
                             <Clock className="w-5 h-5" />
-                            <p className="text-3xl font-extrabold text-slate-950">99.9%</p>
+                            <p className="text-2xl sm:text-3xl font-extrabold text-slate-950">99.9%</p>
                         </div>
-                        <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Automated Uptime</p>
+                        <p className="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">Automated Uptime</p>
                     </div>
                     <div className="flex flex-col items-center justify-center p-4">
                         <div className="flex items-center gap-2 text-emerald-600 mb-1">
                             <ShieldCheck className="w-5 h-5" />
-                            <p className="text-3xl font-extrabold text-slate-950">₦0 Charge</p>
+                            <p className="text-2xl sm:text-3xl font-extrabold text-slate-950">₦0 Charge</p>
                         </div>
-                        <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider">On Wallet Funding</p>
+                        <p className="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">On Wallet Funding</p>
                     </div>
                     <div className="flex flex-col items-center justify-center p-4">
                         <div className="flex items-center gap-2 text-emerald-600 mb-1">
                             <Lock className="w-5 h-5" />
-                            <p className="text-3xl font-extrabold text-slate-950">PCIDSS</p>
+                            <p className="text-2xl sm:text-3xl font-extrabold text-slate-950">PCIDSS</p>
                         </div>
-                        <p className="text-sm font-semibold text-slate-500 uppercase tracking-wider">Secure Payment Gateways</p>
+                        <p className="text-xs sm:text-sm font-semibold text-slate-500 uppercase tracking-wider">Secure Payment Gateways</p>
                     </div>
                 </div>
             </section>
 
             {/* Features Section */}
-            <section className="py-24 px-6 bg-slate-50">
+            <section className="py-16 md:py-24 px-4 sm:px-6 bg-slate-50">
                 <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
+                    <div className="text-center mb-12 md:mb-16">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
                             Services Built For Quick Value
                         </h2>
-                        <p className="text-slate-500 text-lg max-w-2xl mx-auto">
+                        <p className="text-slate-500 text-base sm:text-lg max-w-2xl mx-auto">
                             Whether you are a retail user purchasing data for personal consumption or a business tycoon running an API network, we serve you with speed.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
                         {features.map((f, i) => (
-                            <div key={i} className="bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 border border-slate-100/80 group">
+                            <div key={i} className="bg-white rounded-2xl p-6 sm:p-8 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 border border-slate-100/80 group">
                                 <div className="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition duration-300">
                                     {f.icon}
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-900 mb-3">{f.title}</h3>
+                                <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2 sm:mb-3">{f.title}</h3>
                                 <p className="text-slate-500 text-sm leading-relaxed">{f.desc}</p>
                             </div>
                         ))}
@@ -197,22 +197,22 @@ export default function Landing() {
             </section>
 
             {/* How It Works */}
-            <section className="py-24 px-6 bg-white relative">
+            <section className="py-16 md:py-24 px-4 sm:px-6 bg-white relative">
                 <div className="max-w-5xl mx-auto">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
+                    <div className="text-center mb-12 md:mb-16">
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">
                             Start Transacting In 3 Steps
                         </h2>
-                        <p className="text-slate-500 text-lg">No tedious configurations required.</p>
+                        <p className="text-slate-500 text-base sm:text-lg">No tedious configurations required.</p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 relative">
                         {steps.map((s, i) => (
                             <div key={i} className="relative flex flex-col items-center text-center group">
-                                <div className="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-xl font-black mb-6 border border-emerald-100 shadow-inner group-hover:bg-emerald-600 group-hover:text-white transition duration-300">
+                                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center text-lg sm:text-xl font-black mb-4 sm:mb-6 border border-emerald-100 shadow-inner group-hover:bg-emerald-600 group-hover:text-white transition duration-300">
                                     {s.step}
                                 </div>
-                                <h3 className="text-xl font-bold text-slate-900 mb-2">{s.title}</h3>
+                                <h3 className="text-lg sm:text-xl font-bold text-slate-900 mb-2">{s.title}</h3>
                                 <p className="text-slate-500 text-sm leading-relaxed max-w-xs">{s.desc}</p>
                             </div>
                         ))}
@@ -221,23 +221,23 @@ export default function Landing() {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 px-6 bg-gradient-to-br from-emerald-900 to-slate-950 relative">
+            <section className="py-16 md:py-20 px-4 sm:px-6 bg-gradient-to-br from-emerald-900 to-slate-950 relative">
                 <div className="max-w-4xl mx-auto text-center relative z-10">
-                    <h2 className="text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-4 tracking-tight">
                         Never Run Out of Airtime or Data Again
                     </h2>
-                    <p className="text-emerald-200/80 text-lg mb-8 max-w-xl mx-auto">
+                    <p className="text-emerald-200/80 text-base sm:text-lg mb-8 max-w-xl mx-auto">
                         Join thousands of smart Nigerians choosing instant delivery and best profit margins.
                     </p>
-                    <Link to="/register" className="inline-block bg-white text-slate-950 px-10 py-4 rounded-xl font-bold text-lg hover:bg-slate-50 transition transform hover:-translate-y-0.5 shadow-xl">
+                    <Link to="/register" className="inline-block bg-white text-slate-950 px-8 sm:px-10 py-3.5 sm:py-4 rounded-xl font-bold text-base sm:text-lg hover:bg-slate-50 transition transform hover:-translate-y-0.5 shadow-xl w-full sm:w-auto">
                         Create Your Account Now
                     </Link>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="bg-slate-950 text-slate-400 px-6 py-12 border-t border-slate-900">
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <footer className="bg-slate-950 text-slate-400 px-4 sm:px-6 py-10 md:py-12 border-t border-slate-900">
+                <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-6 md:gap-0">
                     <div className="flex items-center gap-2">
                         <div className="w-7 h-7 bg-emerald-600 rounded-lg flex items-center justify-center">
                             <span className="text-white font-black text-sm">V</span>
@@ -245,7 +245,7 @@ export default function Landing() {
                         <span className="font-extrabold text-white tracking-tight">VTUExpress</span>
                     </div>
                     <p className="text-xs text-slate-500">© 2026 VTUExpress. Fully licensed by NCC guidelines. Securely processed.</p>
-                    <div className="flex gap-6 text-xs font-semibold">
+                    <div className="flex flex-wrap justify-center md:justify-end gap-4 sm:gap-6 text-xs font-semibold">
                         <a href="#" className="hover:text-white transition">Privacy Policy</a>
                         <a href="#" className="hover:text-white transition">Terms of Service</a>
                         <a href="#" className="hover:text-white transition">WhatsApp Support</a>
