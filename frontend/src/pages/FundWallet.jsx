@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { fundWallet } from '../services/api';
-import { useAuth } from '../context/AuthContext';
 
 const quickAmounts = [500, 1000, 2000, 5000, 10000, 20000];
 
@@ -41,32 +40,20 @@ export default function FundWallet() {
     const [amount, setAmount]   = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError]     = useState('');
-    const navigate = useNavigate();
-    const { logout } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setError('');
         try {
-            const response = await fundWallet({ amount: Number(amount) });
+            const response = await fundWallet({ amount });
             const { payment_url, reference } = response.data;
             localStorage.setItem('payment_reference', reference);
             const newWindow = window.open('', '_blank');
             if (newWindow) { newWindow.location.href = payment_url; }
             else { window.location.href = payment_url; }
         } catch (err) {
-            const errorData = err.response?.data;
-            
-            // Log user out seamlessly if their token expired
-            if (errorData?.code === "token_not_valid" || err.response?.status === 401) {
-                logout();
-                navigate('/login');
-                return;
-            }
-            
-            // Display normal error if it's something else
-            setError(errorData?.error || 'Could not initialize payment. Try again.');
+            setError(err.response?.data?.error || 'Could not initialize payment. Try again.');
         } finally {
             setLoading(false);
         }

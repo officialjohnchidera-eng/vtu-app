@@ -8,6 +8,7 @@ import Airtime from './pages/Airtime';
 import Data from './pages/Data';
 import Transactions from './pages/Transactions';
 import FundWallet from './pages/FundWallet';
+import Cable from './pages/Cable';
 import Landing from './pages/Landing';
 
 const ProtectedRoute = ({ children }) => {
@@ -25,6 +26,9 @@ export default function App() {
             <Route path="/dashboard" element={
                 <ProtectedRoute><Dashboard /></ProtectedRoute>
             } />
+            <Route path="/cable" element={
+    <ProtectedRoute><Cable /></ProtectedRoute>
+} />
             <Route path="/airtime" element={
                 <ProtectedRoute><Airtime /></ProtectedRoute>
             } />
