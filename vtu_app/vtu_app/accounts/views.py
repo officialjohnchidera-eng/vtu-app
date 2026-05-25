@@ -72,7 +72,7 @@ class InitializeFundingView(APIView):
         )
 
         # 6. Log full Paystack response for Railway debugging
-        logger.info("Paystack init response for %s: %s", request.user.email, response)
+        
 
         if response.get('status'):
             return Response({
@@ -103,8 +103,7 @@ class VerifyFundingView(APIView):
         paystack = PaystackService()
         response = paystack.verify_payment(reference)
 
-        logger.info("Paystack verify response for ref %s: %s", reference, response)
-
+        print("PAYSTACK RESPONSE:", response, flush=True)
         if response.get('status') and response['data']['status'] == 'success':
             amount = Decimal(str(response['data']['amount'])) / 100
 
@@ -120,7 +119,7 @@ class VerifyFundingView(APIView):
             }, status=status.HTTP_200_OK)
         else:
             error_msg = response.get('message') or 'Payment verification failed'
-            logger.error("Verify failed for ref %s: %s", reference, response)
+            print("PAYSTACK ERROR:", response, flush=True)
             return Response(
                 {'error': error_msg, 'detail': response},
                 status=status.HTTP_400_BAD_REQUEST
