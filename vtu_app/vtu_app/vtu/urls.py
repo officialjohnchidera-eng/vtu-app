@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import BuyAirtimeView, AirtimePurchaseHistoryView, DataPurchaseHistoryView, DataBundleListView, BuyDataView, TransactionHistoryView, BuyCableView, VerifySmartcardView, CablePlansView, CablePurchaseHistoryView
+from .views import BuyAirtimeView, AirtimePurchaseHistoryView, DataPurchaseHistoryView, DataBundleListView, BuyDataView, TransactionHistoryView, BuyCableView, VerifySmartcardView, CablePlansView, CablePurchaseHistoryView, VerifyMeterView, BuyElectricityView, ElectricityPurchaseHistoryView
 
 urlpatterns = [
     path('airtime/', BuyAirtimeView.as_view()),
@@ -12,4 +12,7 @@ urlpatterns = [
     path('cable/verify/', VerifySmartcardView.as_view()),
     path('cable/plans/<str:provider>/', CablePlansView.as_view()),
     path('cable/history/', CablePurchaseHistoryView.as_view()),
+    path('electricity/', BuyElectricityView.as_view()),
+    path('electricity/verify/', VerifyMeterView.as_view()),
+    path('electricity/history/', ElectricityPurchaseHistoryView.as_view())
 ]

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import AirtimePurchase, DataPurchase, CablePurchase
+from .models import AirtimePurchase, DataPurchase, CablePurchase, ElectricityPurchase
 
 class AirtimePurchaseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -53,4 +53,28 @@ class CablePurchaseRequestSerializer(serializers.Serializer):
     def validate_smartcard_number(self, value):
         if not value.isdigit():
             raise serializers.ValidationError("Smartcard number must contain only digits")
+        return value
+
+
+class ElectricityPurchaseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ElectricityPurchase
+        fields = ['id', 'disco', 'meter_number', 'meter_type', 'amount', 'customer_name', 'token', 'status', 'created_at']
+        read_only_fields = ['id', 'status', 'created_at', 'customer_name', 'token']
+
+class ElectricityPurchaseRequestSerializer(serializers.Serializer):
+    meter_number = serializers.CharField(max_length=20)
+    disco = serializers.ChoiceField(choices=[
+        'ikeja-electric', 'eko-electric', 'abuja-electric',
+        'kano-electric', 'portharcourt-electric', 'jos-electric',
+        'ibadan-electric', 'kaduna-electric', 'enugu-electric',
+        'benin-electric', 'aba-electric', 'yola-electric'
+    ])
+    meter_type = serializers.ChoiceField(choices=['prepaid', 'postpaid'])
+    amount = serializers.DecimalField(max_digits=10, decimal_places=2)
+    phone = serializers.CharField(max_length=20)
+
+    def validate_amount(self, value):
+        if value < 500:
+            raise serializers.ValidationError("Minimum electricity purchase is ₦500")
         return value

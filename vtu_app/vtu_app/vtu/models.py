@@ -81,3 +81,47 @@ class CablePurchase(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.provider} - {self.status}"
+
+
+class ElectricityPurchase(models.Model):
+    DISCO_CHOICES = [
+        ('ikeja-electric', 'Ikeja Electric'),
+        ('eko-electric', 'Eko Electric'),
+        ('abuja-electric', 'Abuja Electric'),
+        ('kano-electric', 'Kano Electric'),
+        ('portharcourt-electric', 'Port Harcourt Electric'),
+        ('jos-electric', 'Jos Electric'),
+        ('ibadan-electric', 'Ibadan Electric'),
+        ('kaduna-electric', 'Kaduna Electric'),
+        ('enugu-electric', 'Enugu Electric'),
+        ('benin-electric', 'Benin Electric'),
+        ('aba-electric', 'Aba Electric'),
+        ('yola-electric', 'Yola Electric'),
+    ]
+
+    METER_CHOICES = [
+        ('prepaid', 'Prepaid'),
+        ('postpaid', 'Postpaid'),
+    ]
+
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('success', 'Success'),
+        ('failed', 'Failed'),
+    ]
+
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    disco = models.CharField(max_length=50, choices=DISCO_CHOICES)
+    meter_number = models.CharField(max_length=20)
+    meter_type = models.CharField(max_length=10, choices=METER_CHOICES)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    customer_name = models.CharField(max_length=100, null=True, blank=True)
+    customer_address = models.CharField(max_length=200, null=True, blank=True)
+    token = models.CharField(max_length=100, null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    reference = models.CharField(max_length=100, unique=True)
+    response_data = models.JSONField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.disco} - ₦{self.amount} - {self.status}"

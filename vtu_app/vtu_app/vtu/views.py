@@ -2,8 +2,8 @@ from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from .serializers import AirtimePurchaseSerializer, AirtimePurchaseRequestSerializer, CablePurchaseRequestSerializer, DataPurchaseRequestSerializer, DataPurchaseSerializer, CablePurchaseSerializer
-from .models import AirtimePurchase, DataPurchase, CablePurchase
+from .serializers import AirtimePurchaseSerializer, AirtimePurchaseRequestSerializer, CablePurchaseRequestSerializer, DataPurchaseRequestSerializer, DataPurchaseSerializer, CablePurchaseSerializer,ElectricityPurchaseSerializer, ElectricityPurchaseRequestSerializer
+from .models import AirtimePurchase, DataPurchase, CablePurchase, ElectricityPurchase
 from .vtpass import VTPassService
 from decimal import Decimal
 from accounts.models import Wallet
@@ -209,11 +209,15 @@ class TransactionHistoryView(APIView):
         ).values('id', 'smartcard_number', 'provider', 'amount', 'status', 'created_at')
         cable_list = [dict(t, type='cable', network=t['provider'], phone_number=t['smartcard_number']) for t in cable]
 
+        electricity = ElectricityPurchase.objects.filter(
+        user=request.user
+        ).values('id', 'meter_number', 'disco', 'amount', 'status', 'created_at')
+        electricity_list = [dict(t, type='electricity', network=t['disco'], phone_number=t['meter_number']) for t in electricity]
         airtime_list = [dict(t, type='airtime') for t in airtime]
         data_list = [dict(t, type='data') for t in data]
 
         all_transactions = sorted(
-            airtime_list + data_list + cable_list,
+            airtime_list + data_list + cable_list, + electricity_list,
             key=lambda x: x['created_at'],
             reverse=True
         )
@@ -343,3 +347,113 @@ class CablePurchaseHistoryView(generics.ListAPIView):
 
     def get_queryset(self):
         return CablePurchase.objects.filter(user=self.request.user).order_by('-created_at')
+
+
+class VerifyMeterView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        meter_number = request.data.get('meter_number')
+        disco = request.data.get('disco')
+        meter_type = request.data.get('meter_type')
+
+        if not meter_number or not disco or not meter_type:
+            return Response(
+                {'error': 'Meter number, disco and meter type are required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            vtpass = VTPassService()
+            response = vtpass.verify_meter(meter_number, disco, meter_type)
+            return Response(response, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+
+class BuyElectricityView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = ElectricityPurchaseRequestSerializer(data=request.data)
+
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        meter_number = serializer.validated_data['meter_number']
+        disco = serializer.validated_data['disco']
+        meter_type = serializer.validated_data['meter_type']
+        amount = serializer.validated_data['amount']
+        phone = serializer.validated_data['phone']
+
+        try:
+            wallet = Wallet.objects.get(user=request.user)
+            if wallet.balance < amount:
+                return Response(
+                    {'error': 'Insufficient wallet balance'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            reference = str(uuid.uuid4())
+            vtpass = VTPassService()
+            response = vtpass.buy_electricity(meter_number, disco, meter_type, float(amount), phone)
+
+            if response.get('code') == '000':
+                wallet.balance -= Decimal(str(amount))
+                wallet.save()
+
+                token = response.get('content', {}).get('transactions', {}).get('token', None)
+                customer_name = response.get('content', {}).get('transactions', {}).get('customer_name', None)
+
+                ElectricityPurchase.objects.create(
+                    user=request.user,
+                    disco=disco,
+                    meter_number=meter_number,
+                    meter_type=meter_type,
+                    amount=amount,
+                    customer_name=customer_name,
+                    token=token,
+                    status='success',
+                    reference=reference,
+                    response_data=response
+                )
+                return Response({
+                    'message': 'Electricity purchase successful',
+                    'token': token,
+                    'reference': reference,
+                    'amount': str(amount),
+                    'meter_number': meter_number
+                }, status=status.HTTP_200_OK)
+            else:
+                ElectricityPurchase.objects.create(
+                    user=request.user,
+                    disco=disco,
+                    meter_number=meter_number,
+                    meter_type=meter_type,
+                    amount=amount,
+                    status='failed',
+                    reference=reference,
+                    response_data=response
+                )
+                return Response(
+                    {'error': 'Transaction failed', 'details': response},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+        except Exception as e:
+            print("Error:", str(e))
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+
+class ElectricityPurchaseHistoryView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = ElectricityPurchaseSerializer
+
+    def get_queryset(self):
+        return ElectricityPurchase.objects.filter(user=self.request.user).order_by('-created_at')
