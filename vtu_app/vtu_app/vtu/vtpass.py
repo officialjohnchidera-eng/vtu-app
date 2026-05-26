@@ -117,37 +117,37 @@ class VTPassService:
         except Exception as e:
             return {'code': 'error', 'message': str(e)}
 
-def verify_meter(self, meter_number, disco, meter_type):
-    url = f"{self.base_url}/merchant-verify"
-    payload = {
-        'billersCode': meter_number,
-        'serviceID': disco,
-        'type': meter_type
-    }
-    try:
-        response = requests.post(url, json=payload, headers=self.get_headers_post(), timeout=30)
-        print("Meter Verify Response:", response.text)
-        return response.json()
-    except Exception as e:
-        return {'code': 'error', 'message': str(e)}
+    def verify_meter(self, meter_number, disco, meter_type):
+        url = f"{self.base_url}/merchant-verify"
+        payload = {
+            'billersCode': meter_number,
+            'serviceID': disco,
+            'type': meter_type
+        }
+        try:
+            response = requests.post(url, json=payload, headers=self.get_headers_post(), timeout=30)
+            print("Meter Verify Response:", response.text)
+            return response.json()
+        except Exception as e:
+            return {'code': 'error', 'message': str(e)}
 
-def buy_electricity(self, meter_number, disco, meter_type, amount, phone):
-    url = f"{self.base_url}/pay"
-    payload = {
-        'request_id': f"elect_{meter_number}_{amount}_{int(time.time())}",
-        'serviceID': disco,
-        'billersCode': meter_number,
-        'variation_code': meter_type,
-        'amount': amount,
-        'phone': phone
-    }
-    try:
-        response = requests.post(url, json=payload, headers=self.get_headers_post(), timeout=30)
-        print("Electricity Response:", response.text)
-        return response.json()
-    except requests.exceptions.ReadTimeout:
-        return {'code': 'timeout', 'message': 'Request timed out. Please try again.'}
-    except requests.exceptions.ConnectionError:
-        return {'code': 'connection_error', 'message': 'Could not connect to VTPass.'}
-    except Exception as e:
-        return {'code': 'error', 'message': str(e)}
+    def buy_electricity(self, meter_number, disco, meter_type, amount, phone):
+        url = f"{self.base_url}/pay"
+        payload = {
+            'request_id': f"elect_{meter_number}_{amount}_{int(time.time())}",
+            'serviceID': disco,
+            'billersCode': meter_number,
+            'variation_code': meter_type,
+            'amount': amount,
+            'phone': phone
+        }
+        try:
+            response = requests.post(url, json=payload, headers=self.get_headers_post(), timeout=30)
+            print("Electricity Response:", response.text)
+            return response.json()
+        except requests.exceptions.ReadTimeout:
+            return {'code': 'timeout', 'message': 'Request timed out. Please try again.'}
+        except requests.exceptions.ConnectionError:
+            return {'code': 'connection_error', 'message': 'Could not connect to VTPass.'}
+        except Exception as e:
+            return {'code': 'error', 'message': str(e)}
