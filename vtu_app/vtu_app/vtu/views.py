@@ -464,5 +464,12 @@ class DebugIPView(APIView):
     
     def get(self, request):
         import requests
-        response = requests.get('https://api.ipify.org?format=json')
-        return Response(response.json())
+        from django.conf import settings
+        ip_response = requests.get('https://api.ipify.org?format=json')
+        return Response({
+            'ip': ip_response.json()['ip'],
+            'api_key': settings.VTPASS_API_KEY[:8] + '...',
+            'public_key': settings.VTPASS_PUBLIC_KEY[:8] + '...',
+            'secret_key': settings.VTPASS_SECRET_KEY[:8] + '...',
+            'base_url': settings.VTPASS_BASE_URL
+        })
