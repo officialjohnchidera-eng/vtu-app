@@ -9,6 +9,7 @@ import Data from './pages/Data';
 import Transactions from './pages/Transactions';
 import FundWallet from './pages/FundWallet';
 import Cable from './pages/Cable';
+import Electricity from './pages/Electricity';
 import Landing from './pages/Landing';
 
 const ProtectedRoute = ({ children }) => {
@@ -26,6 +27,10 @@ export default function App() {
             <Route path="/dashboard" element={
                 <ProtectedRoute><Dashboard /></ProtectedRoute>
             } />
+
+            <Route path="/electricity" element={
+    <ProtectedRoute><Electricity /></ProtectedRoute>
+} />
             <Route path="/cable" element={
     <ProtectedRoute><Cable /></ProtectedRoute>
 } />
