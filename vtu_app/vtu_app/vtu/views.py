@@ -457,3 +457,12 @@ class ElectricityPurchaseHistoryView(generics.ListAPIView):
 
     def get_queryset(self):
         return ElectricityPurchase.objects.filter(user=self.request.user).order_by('-created_at')
+
+
+class DebugIPView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        import requests
+        response = requests.get('https://api.ipify.org?format=json')
+        return Response(response.json())
