@@ -7,7 +7,7 @@ const SERVICES = [
     { key: 'airtime',  label: 'Airtime',         desc: 'All networks',          icon: 'ti-device-mobile', color: '#22C55E',  bg: 'rgba(34,197,94,0.1)',     to: '/airtime',  live: true  },
     { key: 'data',     label: 'Data',             desc: 'Bundles & plans',       icon: 'ti-wifi',          color: '#C9A84C',  bg: 'rgba(201,168,76,0.12)',   to: '/data',     live: true  },
     { key: 'cable', label: 'Cable TV', desc: 'DSTV · GOTV · Startimes', icon: 'ti-device-tv', color: '#A78BFA', bg: 'rgba(139,92,246,0.12)', to: '/cable', live: true },
-    { key: 'elect',    label: 'Electricity',      desc: 'Buy units / token',     icon: 'ti-plug',          color: '#FCD34D',  bg: 'rgba(251,191,36,0.1)',    to: true,        live: true },
+    { key: 'elect',    label: 'Electricity',      desc: 'Buy units / token',     icon: 'ti-plug',          color: '#FCD34D',  bg: 'rgba(251,191,36,0.1)',    to: '/electricity',        live: true },
     { key: 'result',   label: 'Result checker',   desc: 'WAEC · NECO · NABTEB',  icon: 'ti-certificate',  color: '#63A2FF',  bg: 'rgba(99,162,255,0.12)',   to: null,        live: false, isNew: true },
     { key: 'exampin',  label: 'Exam PIN',         desc: 'Scratch card PIN',      icon: 'ti-id-badge',      color: '#FB7185',  bg: 'rgba(251,113,133,0.12)', to: null,        live: false },
     { key: 'transfer', label: 'Transfer',         desc: 'Send to wallet',        icon: 'ti-send',          color: '#34D399',  bg: 'rgba(52,211,153,0.1)',    to: null,        live: false },
