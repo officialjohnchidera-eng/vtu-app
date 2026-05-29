@@ -151,7 +151,7 @@ export default function Dashboard() {
                             <div style={styles.eyebrow}>Wallet balance</div>
                             <div style={styles.balAmt}>
                                 <sup style={styles.balSup}>₦</sup>
-                                {Number(wallet?.balance || 0).toLocaleString('en-NG', { minimumFractionDigits: 2 })}
+                                {wallet ? Number(wallet.balance).toLocaleString('en-NG', { minimumFractionDigits: 2 }) : '—'}
                             </div>
                         </div>
                         <div style={styles.badge}>
