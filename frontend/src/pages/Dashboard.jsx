@@ -524,7 +524,7 @@ export default function Dashboard() {
           </div>
           <span style={styles.logoName}>
             VTU
-            <span style={{ fontStyle: "italic", color: "#E4C46B" }}>Pro</span>
+            <span style={{ fontStyle: "italic", color: "#E4C46B" }}>Express</span>
           </span>
         </div>
         <div style={styles.navR}>
