@@ -217,7 +217,7 @@ class TransactionHistoryView(APIView):
         data_list = [dict(t, type='data') for t in data]
 
         all_transactions = sorted(
-            airtime_list + data_list + cable_list, + electricity_list,
+            airtime_list + data_list + cable_list + electricity_list,
             key=lambda x: x['created_at'],
             reverse=True
         )
