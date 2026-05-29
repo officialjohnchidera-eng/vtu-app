@@ -151,7 +151,7 @@ export default function Dashboard() {
                             <div style={styles.eyebrow}>Wallet balance</div>
                             <div style={styles.balAmt}>
                                 <sup style={styles.balSup}>₦</sup>
-                                {Number(wallet?.balance).toLocaleString('en-NG', { minimumFractionDigits: 2 })}
+                                {Number(wallet?.balance || 0).toLocaleString('en-NG', { minimumFractionDigits: 2 })}
                             </div>
                         </div>
                         <div style={styles.badge}>
@@ -187,9 +187,8 @@ export default function Dashboard() {
                         <div style={styles.statSub}>{successCount} of {transactions.length} ok</div>
                     </div>
                     <div style={styles.stat}>
-                        <div style={styles.statLbl}>Services</div>
-                        <div style={styles.statVal}>2 live</div>
-                        <div style={styles.statSub}>6 coming soon</div>
+                        <div style={styles.statVal}>{SERVICES.filter(s => s.live).length} live</div>
+<div style={styles.statSub}>{SERVICES.filter(s => !s.live).length} coming soon</div>
                     </div>
                 </div>
 
