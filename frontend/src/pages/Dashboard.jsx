@@ -467,9 +467,12 @@ export default function Dashboard() {
         getWallet(),
         getTransactions(),
       ]);
+      console.log('wallet:', walletRes.data);
+      console.log('transactions:', txRes.data);
       setWallet(walletRes.data);
       setTransactions(txRes.data.slice(0, 5));
     } catch (err) {
+      console.log('error:', err);
       if (err.response?.status === 401) {
         logout();
         navigate("/login");
@@ -478,7 +481,6 @@ export default function Dashboard() {
       setLoading(false);
     }
   };
-
   const handleLogout = () => {
     logout();
     navigate("/login");
