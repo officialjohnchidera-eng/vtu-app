@@ -467,20 +467,28 @@ export default function Dashboard() {
         getWallet(),
         getTransactions(),
       ]);
-      console.log('wallet:', walletRes.data);
-      console.log('transactions:', txRes.data);
       setWallet(walletRes.data);
       setTransactions(txRes.data.slice(0, 5));
     } catch (err) {
-      console.log('error:', err);
       if (err.response?.status === 401) {
         logout();
         navigate("/login");
+      } else {
+        // Non-401 error — try fetching wallet only
+        try {
+          const walletRes = await getWallet();
+          setWallet(walletRes.data);
+        } catch (e) {
+          if (e.response?.status === 401) {
+            logout();
+            navigate("/login");
+          }
+        }
       }
     } finally {
       setLoading(false);
     }
-  };
+};
   const handleLogout = () => {
     logout();
     navigate("/login");
