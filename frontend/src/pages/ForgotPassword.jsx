@@ -1,23 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Mail, ArrowLeft, Loader2 } from 'lucide-react';
 import axios from 'axios';
 
 const api = axios.create({ baseURL: 'https://vtu-app-production.up.railway.app/api/v1' });
-
-const styles = {
-    page:     { minHeight: '100vh', background: '#0E0E0F', color: '#FAFAFA', fontFamily: "'Geist', sans-serif", display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 },
-    card:     { background: '#1C1C1F', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 20, padding: 32, width: '100%', maxWidth: 400 },
-    logo:     { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 28 },
-    logoMark: { width: 28, height: 28, borderRadius: 8, background: 'rgba(201,168,76,0.12)', border: '1px solid #C9A84C', display: 'flex', alignItems: 'center', justifyContent: 'center' },
-    logoName: { fontSize: 15, fontWeight: 500 },
-    title:    { fontSize: 22, fontWeight: 600, letterSpacing: '-.5px', marginBottom: 6 },
-    subtitle: { fontSize: 13, color: 'rgba(250,250,250,0.4)', marginBottom: 24, lineHeight: 1.5 },
-    label:    { fontSize: 11, fontFamily: 'monospace', color: 'rgba(250,250,250,0.4)', letterSpacing: 1.5, textTransform: 'uppercase', display: 'block', marginBottom: 8 },
-    input:    { width: '100%', background: '#111113', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 10, padding: '12px 14px', color: '#FAFAFA', fontSize: 14, fontFamily: "'Geist', sans-serif", outline: 'none', boxSizing: 'border-box', marginBottom: 16 },
-    btn:      { width: '100%', background: '#C9A84C', color: '#0E0E0F', padding: '13px 0', borderRadius: 12, fontSize: 14, fontWeight: 600, cursor: 'pointer', border: 'none', fontFamily: "'Geist', sans-serif" },
-    alert:    { borderRadius: 10, padding: '11px 14px', fontSize: 13, marginBottom: 16 },
-    back:     { display: 'block', textAlign: 'center', marginTop: 20, fontSize: 13, color: 'rgba(250,250,250,0.4)', textDecoration: 'none' },
-};
 
 export default function ForgotPassword() {
     const [email, setEmail] = useState('');
@@ -42,45 +28,90 @@ export default function ForgotPassword() {
     };
 
     return (
-        <div style={styles.page}>
-            <div style={styles.card}>
-                <div style={styles.logo}>
-                    <div style={styles.logoMark}>
-                        <i className="ti ti-bolt" style={{ fontSize: 14, color: '#C9A84C' }} />
+        <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center p-4 font-sans antialiased text-slate-800 relative overflow-hidden">
+
+            {/* Background accents */}
+            <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+
+            {/* Back to login */}
+            <div className="absolute top-8 left-8">
+                <Link to="/login" className="flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-emerald-600 transition group">
+                    <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition" />
+                    Back to login
+                </Link>
+            </div>
+
+            <div className="w-full max-w-md">
+                {/* Header */}
+                <div className="text-center mb-8">
+                    <div className="inline-flex w-12 h-12 bg-emerald-600 rounded-2xl items-center justify-center shadow-lg shadow-emerald-100 mb-4">
+                        <span className="text-white font-black text-xl">V</span>
                     </div>
-                    <span style={styles.logoName}>VTU<span style={{ fontStyle: 'italic', color: '#E4C46B' }}>Pro</span></span>
+                    <h1 className="text-2xl font-black tracking-tight text-slate-900">Forgot Password?</h1>
+                    <p className="text-slate-500 text-sm mt-1">Enter your email and we'll send you a reset link.</p>
                 </div>
 
-                <h1 style={styles.title}>Forgot password?</h1>
-                <p style={styles.subtitle}>Enter your email and we'll send you a reset link.</p>
+                {/* Card */}
+                <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 p-8">
 
-                {success && (
-                    <div style={{ ...styles.alert, background: 'rgba(34,197,94,0.08)', border: '1px solid rgba(34,197,94,0.2)', color: '#22C55E' }}>
-                        {success}
-                    </div>
-                )}
-                {error && (
-                    <div style={{ ...styles.alert, background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)', color: '#EF4444' }}>
-                        {error}
-                    </div>
-                )}
+                    {success && (
+                        <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 p-3.5 rounded-xl mb-6 text-sm font-medium flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+                            {success}
+                        </div>
+                    )}
+                    {error && (
+                        <div className="bg-red-50 border border-red-100 text-red-600 p-3.5 rounded-xl mb-6 text-sm font-medium flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0"></span>
+                            {error}
+                        </div>
+                    )}
 
-                <form onSubmit={handleSubmit}>
-                    <label style={styles.label}>Email address</label>
-                    <input
-                        style={styles.input}
-                        type="email"
-                        placeholder="you@example.com"
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        required
-                    />
-                    <button type="submit" disabled={loading} style={{ ...styles.btn, opacity: loading ? 0.6 : 1 }}>
-                        {loading ? 'Sending...' : 'Send Reset Link'}
-                    </button>
-                </form>
+                    <form onSubmit={handleSubmit} className="space-y-5">
+                        <div>
+                            <label className="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-2">
+                                Email Address
+                            </label>
+                            <div className="relative">
+                                <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
+                                    <Mail className="w-5 h-5" />
+                                </span>
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
+                                    disabled={loading}
+                                    className="w-full bg-slate-50/50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-sm font-medium focus:outline-none focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/5 transition placeholder:text-slate-400 disabled:opacity-60"
+                                    placeholder="you@example.com"
+                                    required
+                                />
+                            </div>
+                        </div>
 
-                <Link to="/login" style={styles.back}>← Back to login</Link>
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="w-full bg-emerald-600 text-white py-3.5 rounded-xl font-bold hover:bg-emerald-700 transition shadow-lg shadow-emerald-100 disabled:opacity-60 flex items-center justify-center gap-2 mt-2"
+                        >
+                            {loading ? (
+                                <>
+                                    <Loader2 className="w-5 h-5 animate-spin" />
+                                    Sending...
+                                </>
+                            ) : (
+                                'Send Reset Link'
+                            )}
+                        </button>
+                    </form>
+                </div>
+
+                <p className="text-center text-slate-500 mt-6 text-sm font-medium">
+                    Remembered it?{' '}
+                    <Link to="/login" className="text-emerald-600 font-bold hover:underline">
+                        Back to login
+                    </Link>
+                </p>
             </div>
         </div>
     );
