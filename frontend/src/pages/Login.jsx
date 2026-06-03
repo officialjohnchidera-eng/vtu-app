@@ -79,7 +79,8 @@ export default function Login() {
                                     name="username"
                                     value={form.username}
                                     onChange={handleChange}
-                                    className="w-full bg-slate-50/50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-sm font-medium focus:outline-none focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/5 transition placeholder:text-slate-400"
+                                    disabled={loading}
+                                    className="w-full bg-slate-50/50 border border-slate-200 rounded-xl pl-11 pr-4 py-3.5 text-sm font-medium focus:outline-none focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/5 transition placeholder:text-slate-400 disabled:opacity-60"
                                     placeholder="Enter your username"
                                     required
                                 />
@@ -92,11 +93,9 @@ export default function Login() {
                                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-600">
                                     Password
                                 </label>
-                               <p style={{ textAlign: 'center', marginTop: 16, fontSize: 13 }}>
-    <Link to="/forgot-password" style={{ color: '#C9A84C', textDecoration: 'none' }}>
-        Forgot password?
-    </Link>
-</p>
+                                <Link to="/forgot-password" className="text-xs font-semibold text-emerald-600 hover:underline">
+                                    Forgot Password?
+                                </Link>
                             </div>
                             <div className="relative">
                                 <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">
@@ -107,14 +106,16 @@ export default function Login() {
                                     name="password"
                                     value={form.password}
                                     onChange={handleChange}
-                                    className="w-full bg-slate-50/50 border border-slate-200 rounded-xl pl-11 pr-12 py-3.5 text-sm font-medium focus:outline-none focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/5 transition placeholder:text-slate-400"
+                                    disabled={loading}
+                                    className="w-full bg-slate-50/50 border border-slate-200 rounded-xl pl-11 pr-12 py-3.5 text-sm font-medium focus:outline-none focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/5 transition placeholder:text-slate-400 disabled:opacity-60"
                                     placeholder="••••••••"
                                     required
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 hover:text-slate-600 transition"
+                                    disabled={loading}
+                                    className="absolute inset-y-0 right-0 flex items-center pr-4 text-slate-400 hover:text-slate-600 transition disabled:opacity-40"
                                 >
                                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                                 </button>
