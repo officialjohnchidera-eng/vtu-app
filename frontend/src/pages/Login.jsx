@@ -92,9 +92,11 @@ export default function Login() {
                                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-600">
                                     Password
                                 </label>
-                                <a href="#" className="text-xs font-semibold text-emerald-600 hover:underline">
-                                    Forgot Password?
-                                </a>
+                               <p style={{ textAlign: 'center', marginTop: 16, fontSize: 13 }}>
+    <Link to="/forgot-password" style={{ color: '#C9A84C', textDecoration: 'none' }}>
+        Forgot password?
+    </Link>
+</p>
                             </div>
                             <div className="relative">
                                 <span className="absolute inset-y-0 left-0 flex items-center pl-4 text-slate-400">

@@ -11,6 +11,8 @@ import FundWallet from './pages/FundWallet';
 import Cable from './pages/Cable';
 import Electricity from './pages/Electricity';
 import Landing from './pages/Landing';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 
 const ProtectedRoute = ({ children }) => {
     const { user, loading } = useAuth();
@@ -31,6 +33,10 @@ export default function App() {
             <Route path="/electricity" element={
     <ProtectedRoute><Electricity /></ProtectedRoute>
 } />
+
+    <Route path="/forgot-password" element={<ForgotPassword />} />
+<Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
+
             <Route path="/cable" element={
     <ProtectedRoute><Cable /></ProtectedRoute>
 } />

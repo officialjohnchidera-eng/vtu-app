@@ -15,5 +15,5 @@ urlpatterns = [
     path('electricity/', BuyElectricityView.as_view()),
     path('electricity/verify/', VerifyMeterView.as_view()),
     path('electricity/history/', ElectricityPurchaseHistoryView.as_view()),
-    path('debug-ip/', DebugIPView.as_view()),
+   
 ]

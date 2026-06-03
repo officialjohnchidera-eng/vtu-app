@@ -2,6 +2,11 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.views import APIView
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.core.mail import send_mail
+from django.conf import settings
 from .serializers import RegisterSerializer
 from .models import CustomUser, Wallet
 from .paystack import PaystackService
@@ -122,5 +127,82 @@ class VerifyFundingView(APIView):
             print("PAYSTACK ERROR:", response, flush=True)
             return Response(
                 {'error': error_msg, 'detail': response},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+
+class ForgotPasswordView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        email = request.data.get('email')
+        if not email:
+            return Response(
+                {'error': 'Email is required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        try:
+            user = CustomUser.objects.get(email=email)
+            token = default_token_generator.make_token(user)
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            reset_url = f"https://vtu-app-xi.vercel.app/reset-password/{uid}/{token}/"
+            send_mail(
+                subject='Reset Your VTUPro Password',
+                message=f'Click the link below to reset your password:\n\n{reset_url}\n\nThis link expires in 24 hours.',
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[email],
+                fail_silently=False,
+            )
+            return Response(
+                {'message': 'Password reset link sent to your email'},
+                status=status.HTTP_200_OK
+            )
+        except CustomUser.DoesNotExist:
+            return Response(
+                {'message': 'Password reset link sent to your email'},
+                status=status.HTTP_200_OK
+            )
+
+
+class ResetPasswordView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        uid = request.data.get('uid')
+        token = request.data.get('token')
+        password = request.data.get('password')
+        password2 = request.data.get('password2')
+
+        if not all([uid, token, password, password2]):
+            return Response(
+                {'error': 'All fields are required'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        if password != password2:
+            return Response(
+                {'error': 'Passwords do not match'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            user_id = force_str(urlsafe_base64_decode(uid))
+            user = CustomUser.objects.get(pk=user_id)
+
+            if not default_token_generator.check_token(user, token):
+                return Response(
+                    {'error': 'Invalid or expired reset link'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            user.set_password(password)
+            user.save()
+            return Response(
+                {'message': 'Password reset successfully'},
+                status=status.HTTP_200_OK
+            )
+        except (CustomUser.DoesNotExist, ValueError):
+            return Response(
+                {'error': 'Invalid reset link'},
                 status=status.HTTP_400_BAD_REQUEST
             )
