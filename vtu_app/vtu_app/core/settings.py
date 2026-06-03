@@ -80,6 +80,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
     'https://vtu-app-xi.vercel.app',
+    'https://vtu-app-git-main-johnofficial.vercel.app',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
