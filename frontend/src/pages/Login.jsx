@@ -93,6 +93,7 @@ export default function Login() {
                                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-600">
                                     Password
                                 </label>
+                                {/* Corrected to use React Router Link component */}
                                 <Link to="/forgot-password" className="text-xs font-semibold text-emerald-600 hover:underline">
                                     Forgot Password?
                                 </Link>
