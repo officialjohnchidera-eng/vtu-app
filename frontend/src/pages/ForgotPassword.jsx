@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, ArrowLeft, Loader2 } from 'lucide-react';
-import axios from 'axios';
-
-const api = axios.create({ baseURL: 'https://vtu-app-production.up.railway.app/api/v1' });
+import { forgotPassword } from '../services/api';
 
 export default function ForgotPassword() {
     const [email, setEmail] = useState('');
@@ -17,7 +15,7 @@ export default function ForgotPassword() {
         setError('');
         setSuccess('');
         try {
-            await api.post('/auth/forgot-password/', { email });
+            await forgotPassword({ email });
             setSuccess('Password reset link sent! Check your email.');
             setEmail('');
         } catch {
@@ -30,11 +28,9 @@ export default function ForgotPassword() {
     return (
         <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center p-4 font-sans antialiased text-slate-800 relative overflow-hidden">
 
-            {/* Background accents */}
             <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
 
-            {/* Back to login */}
             <div className="absolute top-8 left-8">
                 <Link to="/login" className="flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-emerald-600 transition group">
                     <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition" />
@@ -43,7 +39,6 @@ export default function ForgotPassword() {
             </div>
 
             <div className="w-full max-w-md">
-                {/* Header */}
                 <div className="text-center mb-8">
                     <div className="inline-flex w-12 h-12 bg-emerald-600 rounded-2xl items-center justify-center shadow-lg shadow-emerald-100 mb-4">
                         <span className="text-white font-black text-xl">V</span>
@@ -52,9 +47,7 @@ export default function ForgotPassword() {
                     <p className="text-slate-500 text-sm mt-1">Enter your email and we'll send you a reset link.</p>
                 </div>
 
-                {/* Card */}
                 <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100 p-8">
-
                     {success && (
                         <div className="bg-emerald-50 border border-emerald-100 text-emerald-700 p-3.5 rounded-xl mb-6 text-sm font-medium flex items-center gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
