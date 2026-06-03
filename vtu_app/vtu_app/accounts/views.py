@@ -39,14 +39,12 @@ class InitializeFundingView(APIView):
     def post(self, request):
         amount = request.data.get('amount')
 
-        # 1. Check amount is present
         if not amount:
             return Response(
                 {'error': 'Amount is required'},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # 2. Validate amount is a valid number
         try:
             amount = float(amount)
         except (ValueError, TypeError):
@@ -55,29 +53,23 @@ class InitializeFundingView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # 3. Enforce minimum amount
         if amount < 100:
             return Response(
                 {'error': 'Minimum funding amount is ₦100'},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # 4. Ensure user has an email (Paystack requires it)
         if not request.user.email:
             return Response(
                 {'error': 'Your account has no email address. Please update your profile.'},
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-        # 5. Call Paystack
         paystack = PaystackService()
         response = paystack.initialize_payment(
             email=request.user.email,
             amount=amount
         )
-
-        # 6. Log full Paystack response for Railway debugging
-        
 
         if response.get('status'):
             return Response({
@@ -86,7 +78,6 @@ class InitializeFundingView(APIView):
                 'amount': amount
             }, status=status.HTTP_200_OK)
         else:
-            # 7. Return the REAL Paystack error message, not a generic one
             error_msg = response.get('message') or response.get('error') or 'Could not initialize payment'
             logger.error("Paystack error for %s: %s", request.user.email, response)
             return Response(
@@ -112,7 +103,6 @@ class VerifyFundingView(APIView):
         if response.get('status') and response['data']['status'] == 'success':
             amount = Decimal(str(response['data']['amount'])) / 100
 
-            # Guard against double-crediting the same reference
             wallet = Wallet.objects.get(user=request.user)
             wallet.balance += amount
             wallet.save()
@@ -161,6 +151,12 @@ class ForgotPasswordView(APIView):
             return Response(
                 {'message': 'Password reset link sent to your email'},
                 status=status.HTTP_200_OK
+            )
+        except Exception as e:
+            logger.error("ForgotPassword error: %s", str(e))
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
 
