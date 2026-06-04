@@ -5,15 +5,32 @@ from rest_framework.views import APIView
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.core.mail import send_mail
 from django.conf import settings
 from .serializers import RegisterSerializer
 from .models import CustomUser, Wallet
 from .paystack import PaystackService
 from decimal import Decimal
 import logging
+import requests
 
 logger = logging.getLogger(__name__)
+
+
+def send_reset_email(to_email, reset_url):
+    response = requests.post(
+        'https://api.resend.com/emails',
+        headers={
+            'Authorization': f'Bearer {settings.RESEND_API_KEY}',
+            'Content-Type': 'application/json',
+        },
+        json={
+            'from': 'onboarding@resend.dev',
+            'to': [to_email],
+            'subject': 'Reset Your VTUPro Password',
+            'text': f'Click the link below to reset your password:\n\n{reset_url}\n\nThis link expires in 24 hours.',
+        }
+    )
+    return response
 
 
 class RegisterView(generics.CreateAPIView):
@@ -136,13 +153,13 @@ class ForgotPasswordView(APIView):
             token = default_token_generator.make_token(user)
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             reset_url = f"https://vtu-app-xi.vercel.app/reset-password/{uid}/{token}/"
-            send_mail(
-                subject='Reset Your VTUPro Password',
-                message=f'Click the link below to reset your password:\n\n{reset_url}\n\nThis link expires in 24 hours.',
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[email],
-                fail_silently=False,
-            )
+            result = send_reset_email(email, reset_url)
+            if result.status_code not in [200, 201]:
+                logger.error("Resend error: %s", result.text)
+                return Response(
+                    {'error': 'Failed to send email. Please try again.'},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR
+                )
             return Response(
                 {'message': 'Password reset link sent to your email'},
                 status=status.HTTP_200_OK
