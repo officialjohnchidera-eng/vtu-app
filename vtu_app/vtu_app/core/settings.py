@@ -36,7 +36,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['vtu-app-production.up.railway.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['vtu-app-production.up.railway.app', 'vtu-app-p9x5.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
