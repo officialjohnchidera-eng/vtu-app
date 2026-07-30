@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "https://vtu-app-production.up.railway.app/api/v1";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 // Private instance - attaches JWT token
 const api = axios.create({

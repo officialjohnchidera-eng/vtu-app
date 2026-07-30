@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
-const api = axios.create({ baseURL: 'https://vtu-app-production.up.railway.app/api/v1' });
+const api = axios.create({ baseURL: import.meta.env.VITE_API_URL });
 
 const styles = {
     page:     { minHeight: '100vh', background: '#0E0E0F', color: '#FAFAFA', fontFamily: "'Geist', sans-serif", display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 },
